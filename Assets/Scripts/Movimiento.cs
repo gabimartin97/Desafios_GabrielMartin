@@ -34,6 +34,10 @@ public class Movimiento : MonoBehaviour
         }
                 
 
-        transform.Translate(direccion.normalized * Time.deltaTime * speed);
+        transform.Translate(direccion.normalized * Time.deltaTime * speed *(-1f));
+       
+
+              
+        
     }
 }
