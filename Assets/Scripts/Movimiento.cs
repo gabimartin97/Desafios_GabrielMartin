@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Movimiento : MonoBehaviour
 {
-    [SerializeField]  float speed = 1;
+    [SerializeField]  float speed = 5;
+    [SerializeField] float rotationSpeed = 50;
     // Start is called before the first frame update
     void Start()
     {
@@ -15,8 +16,8 @@ public class Movimiento : MonoBehaviour
     void Update()
     {
         Vector3 direccion = Vector3.zero;
-
-        if(Input.GetKey(KeyCode.W))
+        Vector3 rotacion = Vector3.zero;
+        if (Input.GetKey(KeyCode.W))
         {
             direccion += Vector3.forward;
         }
@@ -32,10 +33,18 @@ public class Movimiento : MonoBehaviour
         {
             direccion += Vector3.back;
         }
-                
+        if (Input.GetKey(KeyCode.Q))
+        {
+            rotacion += Vector3.down;
+        }
+        if (Input.GetKey(KeyCode.E))
+        {
+            rotacion += Vector3.up;
+        }
+
 
         transform.Translate(direccion.normalized * Time.deltaTime * speed *(-1f));
-       
+        transform.Rotate(rotacion * Time.deltaTime * rotationSpeed);
 
               
         
