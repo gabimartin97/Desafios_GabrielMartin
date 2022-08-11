@@ -6,6 +6,7 @@ public class Movimiento : MonoBehaviour
 {
     [SerializeField]  float speed = 5;
     [SerializeField] float rotationSpeed = 50;
+    float cameraAxisX = 0f;
     // Start is called before the first frame update
     void Start()
     {
@@ -15,8 +16,9 @@ public class Movimiento : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        RotatePlayer();
         Vector3 direccion = Vector3.zero;
-        Vector3 rotacion = Vector3.zero;
+       
         if (Input.GetKey(KeyCode.W))
         {
             direccion += Vector3.forward;
@@ -33,20 +35,25 @@ public class Movimiento : MonoBehaviour
         {
             direccion += Vector3.back;
         }
-        if (Input.GetKey(KeyCode.Q))
-        {
-            rotacion += Vector3.down;
-        }
-        if (Input.GetKey(KeyCode.E))
-        {
-            rotacion += Vector3.up;
-        }
-
-
-        transform.Translate(direccion.normalized * Time.deltaTime * speed *(-1f));
-        transform.Rotate(rotacion * Time.deltaTime * rotationSpeed);
+       
+        transform.Translate(direccion.normalized * Time.deltaTime * speed);
+        
 
               
         
+    }
+
+    public void RotatePlayer()
+    {
+        /*
+        Obtengo el valor del input del cursor (Que en Mouse X va de -1(izquierda) a 1(derecha))
+        en función de que tan a la izquierda o derecha se mueve el mouse.
+        */
+        cameraAxisX += Input.GetAxis("Mouse X");
+        // Forma para rotar "inmediatamente" hacia una nueva rotación creada con el método Euler (a partir de los ejes x,y,z)
+        //transform.rotation = Quaternion.Euler(0,cameraAxisX * 0.1f, 0);
+        // Forma para rotar "gradualmente" hacia una nueva rotación con Lerp.
+        Quaternion newRotation = Quaternion.Euler(0, cameraAxisX, 0);
+        transform.rotation = Quaternion.Lerp(transform.rotation, newRotation, 2.5f * Time.deltaTime);
     }
 }
