@@ -31,8 +31,9 @@ public class EnemyBehaviour : MonoBehaviour
                 if (distance.magnitude >= 2f)
                 {
                     Vector3 targetPosition = target.position;
+                    transform.LookAt(targetPosition);
                     transform.Translate(speed * Time.deltaTime * Vector3.Normalize(distance));
-                    transform.LookAt(targetPosition); //Los modelos estan al reves
+                    
                 }
                 
                 break;
